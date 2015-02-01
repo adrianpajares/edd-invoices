@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Easy Digital Downloads - Invoices
 * Plugin URI: http://www.wpbeginner.com
-* Version: 1.0.1
+* Version: 1.0.2
 * Author: WPBeginner
 * Author URI: http://www.wpbeginner.com
 * Description: Display HTML Invoices for EDD
@@ -43,10 +43,10 @@ class EDDInvoices {
         $this->plugin = new stdClass;
         $this->plugin->name = 'edd-invoices'; // Plugin Folder
         $this->plugin->displayName = 'Invoices'; // Plugin Name
-        $this->plugin->version = '1.0.1';
+        $this->plugin->version = '1.0.2';
         $this->plugin->folder = WP_PLUGIN_DIR.'/'.'edd-invoices'; // Full Path to Plugin Folder
         $this->plugin->dirname = plugin_dir_path( __FILE__ );
-        $this->plugin->url = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
+        $this->plugin->url = plugin_dir_url( __FILE__ );
         $this->settings = get_option('edd_settings');
         
         // Updater

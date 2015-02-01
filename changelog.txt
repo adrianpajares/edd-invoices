@@ -1,5 +1,8 @@
-1.0.1:
+1.0:
 Initial Release
 
-1.1:
+1.0.1:
 Fixes bug with activation function
+
+1.0.2:
+Fixes issue with CSS being loaded on http on an https site
