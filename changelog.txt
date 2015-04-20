@@ -1,3 +1,6 @@
+= 1.0.3 =
+* FIX: XSS vulnerability in query args
+
 = 1.0.2 =
 * Fixed a bug that would cause css to be loaded over http on an https site
 
