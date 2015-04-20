@@ -29,8 +29,9 @@ Display HTML Invoices for EDD
 
 
 == Changelog ==
+
 = 1.0.3 =
-* FIX: XSS vulnerability in query args
+* Fixed improper URL to the standard.css  file
 
 = 1.0.2 =
 * Fixed a bug that would cause css to be loaded over http on an https site

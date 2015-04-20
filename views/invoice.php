@@ -9,7 +9,7 @@
 	<title><?php _e('Invoice #', 'edd-invoices'); ?><?php echo edd_get_payment_number( $payment->ID ); ?></title>
 	
 	<!-- CSS -->
-	<link rel="stylesheet" href="<?php echo $this->plugin->url; ?>/css/standard.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="<?php echo set_url_scheme( $this->plugin->url . 'css/standard.css', 'relative' ); ?>" type="text/css" media="all" />
 </head>
 
 <body class="<?php echo strtolower($status); ?>">
