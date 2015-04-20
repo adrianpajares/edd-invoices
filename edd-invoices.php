@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Easy Digital Downloads - Invoices
 * Plugin URI: http://www.wpbeginner.com
-* Version: 1.0.3
+* Version: 1.0.4
 * Author: WPBeginner
 * Author URI: http://www.wpbeginner.com
 * Description: Display HTML Invoices for EDD
@@ -12,7 +12,7 @@
 /*  Copyright 2014 WPBeginner (email : support@wpbeginner.com)
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
+    it under the terms of the GNU General Public License, version 2, as
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -27,7 +27,7 @@
 
 /**
 * EDD Invoices Class
-* 
+*
 * @package EDD
 * @subpackage EDD Invoices
 * @author Tim Carr, Chris Christoff, Syed Balki, Thomas Griffin
@@ -43,28 +43,28 @@ class EDDInvoices {
         $this->plugin = new stdClass;
         $this->plugin->name = 'edd-invoices'; // Plugin Folder
         $this->plugin->displayName = 'Invoices'; // Plugin Name
-        $this->plugin->version = '1.0.3';
+        $this->plugin->version = '1.0.4';
         $this->plugin->folder = WP_PLUGIN_DIR.'/'.'edd-invoices'; // Full Path to Plugin Folder
         $this->plugin->dirname = plugin_dir_path( __FILE__ );
         $this->plugin->url = plugin_dir_url( __FILE__ );
         $this->settings = get_option('edd_settings');
-        
+
         // Updater
         if( class_exists( 'EDD_License' ) ) {
             $license = new EDD_License( __FILE__, $this->plugin->displayName, $this->plugin->version, 'WPBeginner' );
         }
-        
+
         // Admin Hooks
 		add_filter('edd_settings_extensions', array($this, 'adminSettings'), 1, 1);
-		
+
 		add_action('plugins_loaded', array( $this, 'loadLanguageFiles' ) );
 		add_action('admin_init', array( $this, 'add_page' ) );
-	        
+
         // Add hooks & filters if settings defined
-        if ( ! empty( $this->settings['edd-invoices-page'] ) ) {        
+        if ( ! empty( $this->settings['edd-invoices-page'] ) ) {
 	        // Shortcode
 	        add_shortcode('edd_invoices', array($this, 'generateInvoice'));
-	        
+
 			// Frontend Hooks
 			add_action('edd_purchase_history_header_after', array($this, 'purchaseHistoryHeader'));
 			add_action('edd_purchase_history_row_end', array($this, 'purchaseHistoryLink'), 1, 2);
@@ -72,7 +72,7 @@ class EDDInvoices {
 		}
 
     }
-    
+
     /**
     * Adds settings to EDD > Settings > Extensions tab
     */
@@ -83,20 +83,20 @@ class EDDInvoices {
 			'name' 		=> __('Invoices', 'edd-invoices'),
 			'desc' 		=> '',
 			'type' 		=> 'header',
-		); 		
+		);
 		$settingsArr['edd-invoices'.'-page'] = array(
 			'id' 		=> 'edd-invoices'.'-page',
 			'name' 		=> __('Invoice Page', 'edd-invoices'),
 			'desc' 		=> __('Which Page contains the [edd_invoices] shortcode?', 'edd-invoices'),
 			'type' 		=> 'select',
 			'options' 	=> edd_get_pages(),
-		); 
+		);
 		$settingsArr['edd-invoices'.'-logo'] = array(
 			'id' 		=> 'edd-invoices'.'-logo',
 			'name' 		=> __('Logo URL', 'edd-invoices'),
 			'type' 		=> 'upload',
 			'size' 		=> 'regular',
-		); 
+		);
 		$settingsArr['edd-invoices'.'-company-name'] = array(
 			'id' 		=> 'edd-invoices'.'-company-name',
 			'name' 		=> __('Company Name', 'edd-invoices'),
@@ -117,7 +117,7 @@ class EDDInvoices {
 			'desc' 		=> __('Company Address, Line 2', 'edd-invoices'),
 			'type' 		=> 'text',
 			'size' 		=> 'regular',
-		); 
+		);
 		$settingsArr['edd-invoices'.'-city'] = array(
 			'id' 		=> 'edd-invoices'.'-city',
 			'name' 		=> __('City', 'edd-invoices'),
@@ -152,18 +152,18 @@ class EDDInvoices {
 			'desc' 		=> __('Company Tax/VAT Number', 'edd-invoices'),
 			'type' 		=> 'text',
 			'size' 		=> 'regular',
-		); 
-		 
+		);
+
 		return $settingsArr;
     }
-    
+
     /**
 	* Appends a header column called 'Invoice'
 	*/
 	function purchaseHistoryHeader() {
 		echo '<th class="edd_invoice">'.__( 'Invoice', 'edd-invoices').'</th>';
 	}
-	
+
 	/**
 	* Appends a header column called 'Invoice'
 	*
@@ -171,13 +171,13 @@ class EDDInvoices {
 	* @param array $purchaseData Purchase Data
 	*/
 	function purchaseHistoryLink($paymentID, $purchaseData) {
-		$url = add_query_arg(array(
+		$url = esc_url( add_query_arg(array(
 			'payment_key' => edd_get_payment_key($paymentID),
-		), get_permalink($this->settings['edd-invoices'.'-page']));
-	
+		) ), get_permalink($this->settings['edd-invoices'.'-page']));
+
 		echo '<td class="edd_invoice"><a href="'.$url.'">'.__('Generate Invoice', 'edd-invoices').'</a></td>';
 	}
-	
+
 	/**
 	* Used by generateInvoice() and generateInvoiceHTML(), checks that the requested
 	* payment can be viewed by the user
@@ -191,52 +191,52 @@ class EDDInvoices {
 		if (!isset($payment_key)) {
 			return __('Invalid payment key specified.', 'edd-invoices');
 		}
-		
+
 		// Get payment ID and customer ID
 		$paymentID = edd_get_purchase_id_by_key($payment_key);
 		if ($paymentID == 0) {
 			return __('Invalid payment key specified.', 'edd-invoices');
 		}
-		
+
 		// Check user has permission to view invoice
 		$customerID = edd_get_payment_user_id($paymentID);
 		$user_can_view = ( is_user_logged_in() && $customerID == get_current_user_id() ) || ( ( $customerID == 0 || $customerID == '-1' ) && ! is_user_logged_in() && edd_get_purchase_session() ) || current_user_can( 'view_shop_sensitive_data' );
 		if (!$user_can_view) {
 			return __('Invalid payment key specified.', 'edd-invoices');
 		}
-		
+
 		return $paymentID;
 	}
-	
+
 	/**
 	* Shows the form to allow the user to complete billing + VAT fields, before seeing an on-screen HTML invoice
 	*/
 	function generateInvoice() {
 		global $post;
-		
+
 		// Check access
 		$paymentID = $this->checkReceipt();
 		if (!is_numeric($paymentID)) {
 			// Error
 			return $paymentID;
 		}
-		
+
 		// Generate Form
 		$payment   = get_post($paymentID);
 		$user      = edd_get_payment_meta_user_info( $payment->ID );
-		
+
 		// Generate form URL
-		$url = add_query_arg(array(
+		$url = esc_url( add_query_arg(array(
 			'payment_key' 	=> edd_get_payment_key($paymentID),
-		), get_permalink($this->settings['edd-invoices'.'-page']));
-		
+		) ), get_permalink($this->settings['edd-invoices'.'-page']));
+
 		// Output form
 		ob_start();
 		include_once('views/form.php');
 		$display = ob_get_clean();
-		return $display;		
+		return $display;
 	}
-	
+
 	/**
 	* Generates Invoice HTML Template
 	*/
@@ -248,13 +248,13 @@ class EDDInvoices {
 		if (!wp_verify_nonce($_REQUEST['edd-invoices'.'-nonce'], 'edd-invoices'.'-generate-invoice')) {
 			return;
 		}
-		
+
 		// Check access
 		$paymentID = $this->checkReceipt();
 		if (!is_numeric($paymentID)) {
 			return;
 		}
-		
+
 		// Save user details from POST
 		// Set new meta values
 		$meta = edd_get_payment_meta($paymentID);
@@ -264,7 +264,7 @@ class EDDInvoices {
 		$user_info['address'] = array_map('trim', $_POST['edd-payment-address'][0]);
 		$meta['user_info'] = $user_info;
 		update_post_meta($paymentID, '_edd_payment_meta', $meta);
-		
+
 		// Get payment
 		$payment   = get_post($paymentID);
 		$meta      = edd_get_payment_meta( $payment->ID );
@@ -272,7 +272,7 @@ class EDDInvoices {
 		$user      = edd_get_payment_meta_user_info( $payment->ID );
 		$email     = edd_get_payment_user_email( $payment->ID );
 		$status    = edd_get_payment_status( $payment, true );
-		
+
 		// Generate HTML
 		ob_start();
 		include_once('views/invoice.php');
@@ -280,7 +280,7 @@ class EDDInvoices {
 		echo $display;
 		die();
 	}
-    
+
     /**
 	* Loads plugin textdomain
 	*/
