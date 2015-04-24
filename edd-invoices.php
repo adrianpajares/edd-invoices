@@ -170,12 +170,12 @@ class EDDInvoices {
 	* @param int $receiptID Receipt ID
 	* @param array $purchaseData Purchase Data
 	*/
-	function purchaseHistoryLink($paymentID, $purchaseData) {
-		$url = esc_url( add_query_arg(array(
-			'payment_key' => edd_get_payment_key($paymentID),
-		) ), get_permalink($this->settings['edd-invoices'.'-page']));
+	function purchaseHistoryLink( $paymentID, $purchaseData ) {
 
-		echo '<td class="edd_invoice"><a href="'.$url.'">'.__('Generate Invoice', 'edd-invoices').'</a></td>';
+		$args = array( 'payment_key' => edd_get_payment_key( $paymentID ) );
+		$url  = add_query_arg( $args, get_permalink( $this->settings['edd-invoices'.'-page'] ) );
+
+		echo '<td class="edd_invoice"><a href="' . esc_url( $url ) . '">' . __( 'Generate Invoice', 'edd-invoices' ) . '</a></td>';
 	}
 
 	/**
