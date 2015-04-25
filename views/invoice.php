@@ -106,7 +106,19 @@
 						<?php
 					}
 					?>
-					
+
+					<?php 
+					// Tax
+					if (isset($discount['amount'])) {
+						?>
+						<tr>
+							<td class="name"><?php _e('Discount:', 'edd-invoices' ); ?></td>
+							<td class="price"><?php echo $discount['amount']; ?></td>
+						</tr>
+					<?php
+					}
+					?>
+
 					<!-- Total -->
 					<tr>
 						<td class="name"><?php _e('Total Price:', 'edd-invoices' ); ?></td>

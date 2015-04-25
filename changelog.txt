@@ -1,3 +1,6 @@
+= 1.0.7 =
+* Fixed a bug where null values were displayed in forms. Also fixed a bug where discounts were not displayed.
+
 = 1.0.6 =
 * Added translation support
 
