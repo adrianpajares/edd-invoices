@@ -28,7 +28,7 @@
 			
 			<!-- Invoice Details -->
 			<div class="alignright">
-				<h1><?php echo __('Invoice #', 'edd-invoices').$paymen->ID; ?></h1>
+				<h1><?php echo __('Invoice #', 'edd-invoices').$payment->ID; ?></h1>
 			</div>
 		</header>
 		
