@@ -28,7 +28,7 @@
 			
 			<!-- Invoice Details -->
 			<div class="alignright">
-				<h1><?php echo __('Invoice #', 'edd-invoices').$payment->ID; ?></h1>
+				<h1><?php echo __('Invoice #', 'edd-invoices').$paymen->ID; ?></h1>
 			</div>
 		</header>
 		
@@ -103,17 +103,17 @@
 							<td class="name"><strong><?php _e('Tax', 'edd-invoices'); ?></strong></td>
 							<td class="price"><?php echo edd_payment_tax( $payment->ID ); ?></td>
 						</tr>
-						<?php
+					<?php
 					}
 					?>
 
 					<?php 
-					// Tax
-					if (isset($discount['amount'])) {
+					// discounts
+					if ( edd_discount_exists( edd_get_discount_id_by_code( $user['discount'] ) ) ) {
 						?>
 						<tr>
 							<td class="name"><?php _e('Discount:', 'edd-invoices' ); ?></td>
-							<td class="price"><?php echo $discount['amount']; ?></td>
+							<td class="price"><?php echo '$' . edd_get_discount_amount( edd_get_discount_id_by_code( $user['discount'] ) ); ?></td>
 						</tr>
 					<?php
 					}
