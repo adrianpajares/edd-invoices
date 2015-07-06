@@ -28,13 +28,13 @@
 			
 			<!-- Invoice Details -->
 			<div class="alignright">
-				<h1><?php echo __('Invoice #', 'edd-invoices').$payment->ID; ?></h1>
+				<h1><?php printf( __('Invoice %s', 'edd-invoices' ), edd_get_payment_number( $payment->ID ) ); ?></h1>
 			</div>
 		</header>
 		
 		<section id="contacts">
 			<div class="alignleft">
-				<header><?php _e('Invoice #', 'edd-invoices'); ?><?php echo edd_get_payment_number( $payment->ID ); ?></header>
+				<header><?php printf( __('Invoice %s', 'edd-invoices' ), edd_get_payment_number( $payment->ID ) ); ?></header>
 				
 				<article>
 					<?php
