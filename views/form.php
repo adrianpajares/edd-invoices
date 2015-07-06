@@ -48,11 +48,11 @@
 	</div>
 	<div class="edd-invoices-div edd-invoices-custom-div">
 		<label class="edd-invoices-field edd-invoices-custom-field" for="vat"><?php _e('Tax/VAT Number:', 'edd-invoices'); ?></label>
-		<input type="text" name="edd-payment-address[0][vat]" value="<?php echo (is_array($user['address']) ? $user['address']['vat'] : ''); ?>" id="vat" />
+		<input type="text" name="edd-payment-address[0][vat]" value="<?php echo (is_array($user['address']) && isset( $user['address']['vat'] ) ? $user['address']['vat'] : ''); ?>" id="vat" />
 	</div>
 	<div class="edd-invoices-div edd-invoices-custom-div">
 		<label class="edd-invoices-field edd-invoices-custom-field" for="notes"><?php _e('Custom Notes:', 'edd-invoices'); ?></label>
-		<textarea name="edd-payment-address[0][notes]"><?php echo (is_array($user['address']) ? $user['address']['notes'] : ''); ?></textarea>
+		<textarea name="edd-payment-address[0][notes]"><?php echo (is_array($user['address']) && isset( $user['address']['notes'] ) ? $user['address']['notes'] : ''); ?></textarea>
 	</div>
 	<div class="edd-invoices-div edd-invoices-custom-div">
 		<?php wp_nonce_field('edd-invoices'.'-generate-invoice', 'edd-invoices'.'-nonce'); ?>
