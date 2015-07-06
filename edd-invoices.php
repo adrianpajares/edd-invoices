@@ -172,7 +172,7 @@ class EDDInvoices {
 	*/
 	function purchaseHistoryLink( $paymentID, $purchaseData ) {
 
-		$args = array( 'payment_key' => edd_get_payment_key( $paymentID ) );
+		$args = array( 'payment_id' => $paymentID );
 		$url  = add_query_arg( $args, get_permalink( $this->settings['edd-invoices'.'-page'] ) );
 
 		echo '<td class="edd_invoice"><a href="' . esc_url( $url ) . '">' . __( 'Generate Invoice', 'edd-invoices' ) . '</a></td>';
@@ -185,27 +185,33 @@ class EDDInvoices {
 	function checkReceipt() {
 		// Check payment key exists
 		$session = edd_get_purchase_session();
-		if (isset($_GET['payment_key'])) {
-			$payment_key = urldecode($_GET['payment_key']);
+
+		if( isset( $_GET['payment_key'] ) ) {
+			$payment_id = edd_get_purchase_id_by_key( urldecode( $_GET['payment_key'] ) );
 		}
-		if (!isset($payment_key)) {
-			return __('Invalid payment key specified.', 'edd-invoices');
+
+		if (isset($_GET['payment_id'])) {
+			$payment_id = urldecode($_GET['payment_id']);
+		}
+
+		if ( empty( $payment_id ) ) {
+			return __('Invalid payment ID specified.', 'edd-invoices');
 		}
 
 		// Get payment ID and customer ID
-		$paymentID = edd_get_purchase_id_by_key($payment_key);
-		if ($paymentID == 0) {
-			return __('Invalid payment key specified.', 'edd-invoices');
+		$payment = edd_get_payment_by( 'ID', $payment_id );
+		if ( ! $payment ) {
+			return __('Invalid payment ID specified.', 'edd-invoices');
 		}
 
 		// Check user has permission to view invoice
-		$customerID = edd_get_payment_user_id($paymentID);
+		$customerID = edd_get_payment_user_id($payment_id);
 		$user_can_view = ( is_user_logged_in() && $customerID == get_current_user_id() ) || ( ( $customerID == 0 || $customerID == '-1' ) && ! is_user_logged_in() && edd_get_purchase_session() ) || current_user_can( 'view_shop_sensitive_data' );
 		if (!$user_can_view) {
-			return __('Invalid payment key specified.', 'edd-invoices');
+			return __('You do not have permission to view this invoice.', 'edd-invoices');
 		}
 
-		return $paymentID;
+		return $payment_id;
 	}
 
 	/**
@@ -227,7 +233,7 @@ class EDDInvoices {
 
 		// Generate form URL
 		$url = esc_url( add_query_arg(array(
-			'payment_key' 	=> edd_get_payment_key($paymentID),
+			'payment_id' => $paymentID,
 		) ), get_permalink($this->settings['edd-invoices'.'-page']));
 
 		// Output form
