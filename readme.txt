@@ -4,7 +4,7 @@ Donate link: http://www.wpbeginner.com/
 Tags: edd,easy digital downloads,invoices,invoicing
 Requires at least: 3.9
 Tested up to: 4.2
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,11 @@ Display HTML Invoices for EDD
 
 
 == Changelog ==
+= 1.0.8 =
+* Fixed: Incorrect invoice data when generating invoices for subscription payments
+* Fixed: Undefined index notices
+
+
 = 1.0.7 =
 * Fixed: Missing text strings in language files
 
