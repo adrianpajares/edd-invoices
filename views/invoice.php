@@ -174,7 +174,7 @@
 						<!-- Vendor Tax/VAT # -->
 						<p>
 							<?php 
-							_e('Vendor Company Registration #: ', 'edd-invoices'); 
+							_e('Company Tax/VAT #: ', 'edd-invoices'); 
 							echo $this->settings['edd-invoices'.'-tax'];
 							?>
 						</p>
