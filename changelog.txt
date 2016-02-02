@@ -1,3 +1,6 @@
+= 1.1 =
+* Fix: Fees not displayed on invoices
+
 = 1.0.9 =
 * Fixed incorrect company tax label
 
