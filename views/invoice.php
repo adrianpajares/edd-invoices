@@ -134,6 +134,17 @@
 							}
 						}
 					}
+					$fees = edd_get_payment_fees( $payment->ID );
+					if ( $fees ) {
+						foreach ( $fees as $key => $fee ) {
+							?>
+							<tr>
+								<td class="name"><?php echo $fee['label']; ?></td>
+								<td class="price"><?php echo edd_currency_filter( edd_format_amount( $fee[ 'amount' ] ) ); ?></td>
+							</tr>
+							<?php
+						}
+					}
 					?>
 				</tbody>
 			</table>
