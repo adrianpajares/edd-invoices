@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Easy Digital Downloads - Invoices
 * Plugin URI: http://www.wpbeginner.com
-* Version: 1.1.1
+* Version: 1.1.2
 * Author: WPBeginner
 * Author URI: http://www.wpbeginner.com
 * Description: Display HTML Invoices for EDD
@@ -31,7 +31,7 @@
 * @package EDD
 * @subpackage EDD Invoices
 * @author Tim Carr, Chris Christoff, Syed Balki, Thomas Griffin
-* @version 1.1.1
+* @version 1.1.2
 * @copyright WPBeginner
 */
 class EDDInvoices {
@@ -43,10 +43,11 @@ class EDDInvoices {
         $this->plugin = new stdClass;
         $this->plugin->name = 'edd-invoices'; // Plugin Folder
         $this->plugin->displayName = 'Invoices'; // Plugin Name
-        $this->plugin->version = '1.1.1';
+        $this->plugin->version = '1.1.2';
         $this->plugin->folder = WP_PLUGIN_DIR.'/'.'edd-invoices'; // Full Path to Plugin Folder
         $this->plugin->dirname = plugin_dir_path( __FILE__ );
         $this->plugin->url = plugin_dir_url( __FILE__ );
+        $this->settings = get_option('edd_settings');
 
         // Updater
         if( class_exists( 'EDD_License' ) ) {
@@ -59,7 +60,7 @@ class EDDInvoices {
 		add_action('plugins_loaded', array( $this, 'loadLanguageFiles' ) );
 
         // Add hooks & filters if settings defined
-        if ( edd_get_option( 'edd-invoices-page' ) ) {
+        if ( ! empty( $this->settings['edd-invoices-page'] ) ) {
 	        // Shortcode
 	        add_shortcode('edd_invoices', array($this, 'generateInvoice'));
 
@@ -76,75 +77,75 @@ class EDDInvoices {
     */
     function adminSettings($settingsArr) {
     	// Settings
-		$settingsArr['edd-invoices-settings'] = array(
-			'id' 		=> 'edd-invoices-settings',
+		$settingsArr['edd-invoices'.'-settings'] = array(
+			'id' 		=> 'edd-invoices'.'-settings',
 			'name' 		=> __('Invoices', 'edd-invoices'),
 			'desc' 		=> '',
 			'type' 		=> 'header',
 		);
-		$settingsArr['edd-invoices-page'] = array(
-			'id' 		=> 'edd-invoices-page',
+		$settingsArr['edd-invoices'.'-page'] = array(
+			'id' 		=> 'edd-invoices'.'-page',
 			'name' 		=> __('Invoice Page', 'edd-invoices'),
 			'desc' 		=> __('Which Page contains the [edd_invoices] shortcode?', 'edd-invoices'),
 			'type' 		=> 'select',
 			'options' 	=> edd_get_pages(),
 		);
-		$settingsArr['edd-invoices-logo'] = array(
-			'id' 		=> 'edd-invoices-logo',
+		$settingsArr['edd-invoices'.'-logo'] = array(
+			'id' 		=> 'edd-invoices'.'-logo',
 			'name' 		=> __('Logo URL', 'edd-invoices'),
 			'type' 		=> 'upload',
 			'size' 		=> 'regular',
 		);
-		$settingsArr['edd-invoices-company-name'] = array(
-			'id' 		=> 'edd-invoices-company-name',
+		$settingsArr['edd-invoices'.'-company-name'] = array(
+			'id' 		=> 'edd-invoices'.'-company-name',
 			'name' 		=> __('Company Name', 'edd-invoices'),
 			'desc' 		=> __('Company Name shown on Invoices', 'edd-invoices'),
 			'type' 		=> 'text',
 			'size' 		=> 'regular',
 		);
-		$settingsArr['edd-invoices-address'] = array(
-			'id' 		=> 'edd-invoices-address',
+		$settingsArr['edd-invoices'.'-address'] = array(
+			'id' 		=> 'edd-invoices'.'-address',
 			'name' 		=> __('Address Line 1', 'edd-invoices'),
 			'desc' 		=> __('Company Address, Line 1', 'edd-invoices'),
 			'type' 		=> 'text',
 			'size' 		=> 'regular',
 		);
-		$settingsArr['edd-invoices-address2'] = array(
-			'id' 		=> 'edd-invoices-address2',
+		$settingsArr['edd-invoices'.'-address2'] = array(
+			'id' 		=> 'edd-invoices'.'-address2',
 			'name' 		=> __('Address Line 2', 'edd-invoices'),
 			'desc' 		=> __('Company Address, Line 2', 'edd-invoices'),
 			'type' 		=> 'text',
 			'size' 		=> 'regular',
 		);
-		$settingsArr['edd-invoices-city'] = array(
-			'id' 		=> 'edd-invoices-city',
+		$settingsArr['edd-invoices'.'-city'] = array(
+			'id' 		=> 'edd-invoices'.'-city',
 			'name' 		=> __('City', 'edd-invoices'),
 			'desc' 		=> __('Company City', 'edd-invoices'),
 			'type' 		=> 'text',
 			'size' 		=> 'regular',
 		);
-		$settingsArr['edd-invoices-zipcode'] = array(
-			'id' 		=> 'edd-invoices-zipcode',
+		$settingsArr['edd-invoices'.'-zipcode'] = array(
+			'id' 		=> 'edd-invoices'.'-zipcode',
 			'name' 		=> __('ZIP / Postal Code', 'edd-invoices'),
 			'desc' 		=> __('Company ZIP/Postal Code', 'edd-invoices'),
 			'type' 		=> 'text',
 			'size' 		=> 'regular',
 		);
-		$settingsArr['edd-invoices-country'] = array(
-			'id' 		=> 'edd-invoices-country',
+		$settingsArr['edd-invoices'.'-country'] = array(
+			'id' 		=> 'edd-invoices'.'-country',
 			'name' 		=> __('Country', 'edd-invoices'),
 			'desc' 		=> __('Company Country', 'edd-invoices'),
 			'type' 		=> 'select',
 			'options' 	=> edd_get_country_list(),
 		);
-		$settingsArr['edd-invoices-number'] = array(
-			'id' 		=> 'edd-invoices-number',
+		$settingsArr['edd-invoices'.'-number'] = array(
+			'id' 		=> 'edd-invoices'.'-number',
 			'name' 		=> __('Registration Number', 'edd-invoices'),
 			'desc' 		=> __('Company Registration Number', 'edd-invoices'),
 			'type' 		=> 'text',
 			'size' 		=> 'regular',
 		);
-		$settingsArr['edd-invoices-vat'] = array(
+		$settingsArr['edd-invoices'.'-vat'] = array(
 			'id' 		=> 'edd-invoices'.'-tax',
 			'name' 		=> __('Tax/VAT Number', 'edd-invoices'),
 			'desc' 		=> __('Company Tax/VAT Number', 'edd-invoices'),
@@ -171,7 +172,7 @@ class EDDInvoices {
 	function purchaseHistoryLink( $paymentID, $purchaseData ) {
 
 		$args = array( 'payment_id' => $paymentID );
-		$url  = add_query_arg( $args, get_permalink( edd_get_option( 'edd-invoices-page' ) ) );
+		$url  = add_query_arg( $args, get_permalink( $this->settings['edd-invoices'.'-page'] ) );
 
 		echo '<td class="edd_invoice"><a href="' . esc_url( $url ) . '">' . __( 'Generate Invoice', 'edd-invoices' ) . '</a></td>';
 	}
@@ -232,7 +233,7 @@ class EDDInvoices {
 		// Generate form URL
 		$url = esc_url( add_query_arg(array(
 			'payment_id' => $paymentID,
-		) ), get_permalink( edd_get_option( 'edd-invoices-page' ) ) );
+		) ), get_permalink($this->settings['edd-invoices'.'-page']));
 
 		// Output form
 		ob_start();
@@ -312,6 +313,31 @@ class EDDInvoices {
             load_plugin_textdomain( 'edd-invoices', false, $lang_dir );
         }
 	}
+
+	function add_page(){
+		// if settings exist
+		if ( !empty( $this->settings ) ) {
+
+			// if our page isnt set
+			if ( ! edd_get_option( 'edd-invoices-page', false ) ) {
+				// make page
+				$page = wp_insert_post(
+					array(
+							'post_title'     => __( 'Invoice', 'edd-invoices' ),
+							'post_content'   => '[edd_invoices]',
+							'post_status'    => 'publish',
+							'post_author'    => get_current_user_id(),
+							'post_type'      => 'page',
+							'post_parent'    => edd_get_option( 'purchase_history_page', false ),
+							'comment_status' => 'closed'
+						)
+					);
+				global $edd_options;
+				$options[ 'edd-invoices-page' ] = $page;
+				update_option( 'edd_settings', array_merge( $edd_options, $options ) );
+			}
+		}
+	}
 }
 
 if ( class_exists( 'Easy_Digital_Downloads' ) ) {
@@ -320,25 +346,23 @@ if ( class_exists( 'Easy_Digital_Downloads' ) ) {
 
 function edd_invoices_activation() {
 
-	if( ! function_exists( 'edd_get_option' ) ) {
-		return;
-	}
-
 	// if our page isnt set
-	if ( ! edd_get_option( 'edd-invoices-page' ) ) {
+	if ( ! edd_get_option( 'edd-invoices-page', false ) ) {
 		// make page
-		$page = wp_insert_post( array(
-			'post_title'     => __( 'Invoice', 'edd-invoices' ),
-			'post_content'   => '[edd_invoices]',
-			'post_status'    => 'publish',
-			'post_author'    => get_current_user_id(),
-			'post_type'      => 'page',
-			'post_parent'    => edd_get_option( 'purchase_history_page', false ),
-			'comment_status' => 'closed'
-		) );
-
-		edd_update_option( 'edd-invoices-page', $page );
-
+		$page = wp_insert_post(
+			array(
+					'post_title'     => __( 'Invoice', 'edd-invoices' ),
+					'post_content'   => '[edd_invoices]',
+					'post_status'    => 'publish',
+					'post_author'    => get_current_user_id(),
+					'post_type'      => 'page',
+					'post_parent'    => edd_get_option( 'purchase_history_page', false ),
+					'comment_status' => 'closed'
+				)
+			);
+		global $edd_options;
+		$options[ 'edd-invoices-page' ] = $page;
+		update_option( 'edd_settings', array_merge( $edd_options, $options ) );
 	}
 }
 register_activation_hook( __FILE__, 'edd_invoices_activation' );
