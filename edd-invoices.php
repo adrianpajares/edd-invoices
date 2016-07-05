@@ -58,7 +58,6 @@ class EDDInvoices {
 		add_filter('edd_settings_extensions', array($this, 'adminSettings'), 1, 1);
 
 		add_action('plugins_loaded', array( $this, 'loadLanguageFiles' ) );
-		add_action('admin_init', array( $this, 'add_page' ) );
 
         // Add hooks & filters if settings defined
         if ( ! empty( $this->settings['edd-invoices-page'] ) ) {
@@ -344,3 +343,26 @@ class EDDInvoices {
 if ( class_exists( 'Easy_Digital_Downloads' ) ) {
 	new EDDInvoices();
 }
+
+function edd_invoices_activation() {
+
+	// if our page isnt set
+	if ( ! edd_get_option( 'edd-invoices-page', false ) ) {
+		// make page
+		$page = wp_insert_post(
+			array(
+					'post_title'     => __( 'Invoice', 'edd-invoices' ),
+					'post_content'   => '[edd_invoices]',
+					'post_status'    => 'publish',
+					'post_author'    => get_current_user_id(),
+					'post_type'      => 'page',
+					'post_parent'    => edd_get_option( 'purchase_history_page', false ),
+					'comment_status' => 'closed'
+				)
+			);
+		global $edd_options;
+		$options[ 'edd-invoices-page' ] = $page;
+		update_option( 'edd_settings', array_merge( $edd_options, $options ) );
+	}
+}
+register_activation_hook( __FILE__, 'edd_invoices_activation' );
