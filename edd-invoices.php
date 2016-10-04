@@ -174,10 +174,10 @@ class EDDInvoices {
 		$payment = new EDD_Payment( $paymentID );
 		
 		$unaccetable_payment_statuses = apply_filters( 'edd_invoices_unaccetable_payment_statuses', array(
-			'pending'   => __( 'Pending', 'easy-digital-downloads' ),
-			'failed'    => __( 'Failed', 'easy-digital-downloads' ),
-			'abandoned' => __( 'Abandoned', 'easy-digital-downloads' ),
-			'revoked'   => __( 'Revoked', 'easy-digital-downloads' )
+			'pending'   => __( 'Pending', 'edd-invoices' ),
+			'failed'    => __( 'Failed', 'edd-invoices' ),
+			'abandoned' => __( 'Abandoned', 'edd-invoices' ),
+			'revoked'   => __( 'Revoked', 'edd-invoices' )
 		) );
 		
 		if ( array_key_exists( $payment->status, $unaccetable_payment_statuses ) ){
