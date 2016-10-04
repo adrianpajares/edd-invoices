@@ -171,6 +171,19 @@ class EDDInvoices {
 	*/
 	function purchaseHistoryLink( $paymentID, $purchaseData ) {
 
+		$payment = new EDD_Payment( $paymentID );
+		
+		$unaccetable_payment_statuses = apply_filters( 'edd_invoices_unaccetable_payment_statuses', array(
+			'pending'   => __( 'Pending', 'easy-digital-downloads' ),
+			'failed'    => __( 'Failed', 'easy-digital-downloads' ),
+			'abandoned' => __( 'Abandoned', 'easy-digital-downloads' ),
+			'revoked'   => __( 'Revoked', 'easy-digital-downloads' )
+		) );
+		
+		if ( array_key_exists( $payment->status, $unaccetable_payment_statuses ) ){
+			return;
+		}
+
 		$args = array( 'payment_id' => $paymentID );
 		$url  = add_query_arg( $args, get_permalink( $this->settings['edd-invoices'.'-page'] ) );
 
