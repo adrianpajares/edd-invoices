@@ -178,7 +178,7 @@ class EDDInvoices {
 			'complete'    => __( 'Complete', 'edd-invoices' ),
 		) );
 		
-		if ( !array_key_exists( $payment->status, $acceptable_payment_statuses ) ){
+		if ( ! array_key_exists( $payment->status, $acceptable_payment_statuses ) ){
 			return;
 		}
 
