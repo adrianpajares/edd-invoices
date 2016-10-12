@@ -174,9 +174,9 @@ class EDDInvoices {
 		$payment = new EDD_Payment( $paymentID );
 		
 		$acceptable_payment_statuses = apply_filters( 'edd_invoices_acceptable_payment_statuses', array(
-			'publish'   => __( 'Publish', 'edd-invoices' ),
-			'complete'  => __( 'Complete', 'edd-invoices' ),
-			'revoked'   => __( 'Revoked', 'edd-invoices' ),
+			'publish',
+			'complete',
+			'revoked'
 		) );
 		
 		if ( ! array_key_exists( $payment->status, $acceptable_payment_statuses ) ){
