@@ -116,7 +116,8 @@
 					<!-- Paid -->
 					<tr>
 						<td class="name"><?php _e('Payment Status:', 'edd-invoices'); ?></td>
-						<td class="price"><?php echo $status; ?></td>
+						<?php $statuses = edd_get_payment_statuses(); ?>
+						<td class="price"><?php echo array_key_exists( $status, $statuses ) ? $statuses[ $status ] : $status; ?></td>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -160,7 +161,7 @@
 					<p>
 						<?php
 						_e('Purchase Date: ', 'edd-invoices');
-						echo date('dS F, Y', strtotime($payment->post_date));
+						echo date('dS F, Y', strtotime($payment->completed_date));
 						?>
 					</p>
 
