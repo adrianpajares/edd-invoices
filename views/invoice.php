@@ -228,7 +228,7 @@
 			if (strtolower($status) == 'complete') {
 				?>
 				<div class="alignright">
-					<img src="<?php echo $this->plugin->url; ?>/images/paid-sign.png" width="213" height="113" alt="<?php _e('Paid', 'edd-invoices'); ?>" />
+					<img src="<?php echo trailingslashit($this->plugin->url); ?>images/paid-sign.png" width="213" height="113" alt="<?php _e('Paid', 'edd-invoices'); ?>" />
 				</div>
 				<?php
 			} 
