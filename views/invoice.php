@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
-<head>    
+<head>
     <!-- Metadata -->
     <meta charset="UTF-8">
     <meta name="HandheldFriendly" content="true" />
-	
+
 	<!-- Title -->
 	<title><?php _e('Invoice #', 'edd-invoices'); ?><?php echo edd_get_payment_number( $payment->ID ); ?></title>
-	
+
 	<!-- CSS -->
 	<link rel="stylesheet" href="<?php echo set_url_scheme( $this->plugin->url . 'css/standard.css', 'relative' ); ?>" type="text/css" media="all" />
 </head>
@@ -21,21 +21,21 @@
 				if (isset($this->settings['edd-invoices'.'-logo'])) {
 					?>
 					<img src="<?php echo $this->settings['edd-invoices'.'-logo']; ?>" />
-					<?php	
+					<?php
 				}
 				?>
 			</div>
-			
+
 			<!-- Invoice Details -->
 			<div class="alignright">
 				<h1><?php printf( __('Invoice %s', 'edd-invoices' ), edd_get_payment_number( $payment->ID ) ); ?></h1>
 			</div>
 		</header>
-		
+
 		<section id="contacts">
 			<div class="alignleft">
 				<header><?php printf( __('Invoice %s', 'edd-invoices' ), edd_get_payment_number( $payment->ID ) ); ?></header>
-				
+
 				<article>
 					<?php
 					// Company Name
@@ -44,7 +44,7 @@
 						<p><strong><?php echo $this->settings['edd-invoices'.'-company-name']; ?></strong></p>
 						<?php
 					}
-					
+
 					// Address + Company Details
 					$keys = array('address','address2','city','zipcode','country');
 					foreach ($keys as $key) {
@@ -52,7 +52,7 @@
 							?>
 							<p>
 								<?php
-								echo $this->settings['edd-invoices'.'-'.$key]; 
+								echo $this->settings['edd-invoices'.'-'.$key];
 								?>
 							</p>
 							<?php
@@ -61,10 +61,10 @@
 					?>
 				</article>
 			</div>
-			
+
 			<div class="alignright">
 				<header><?php _e('Bill To:', 'edd-invoices'); ?></header>
-				
+
 				<article>
 					<?php
 					if (isset($user['first_name'])) {
@@ -77,8 +77,8 @@
 						if (isset($user['address'][$key])) {
 							?>
 							<p>
-								<?php 
-								echo $user['address'][$key]; 
+								<?php
+								echo $user['address'][$key];
 								?>
 							</p>
 							<?php
@@ -88,14 +88,14 @@
 				</article>
 			</div>
 		</section>
-		
+
 		<!-- Items -->
 		<section id="items">
 			<header><?php _e('Invoice Items:', 'edd-invoices'); ?></header>
-			
+
 			<table>
 				<tfoot>
-					<?php 
+					<?php
 					// Tax
 					if (edd_use_taxes()) {
 						?>
@@ -106,13 +106,13 @@
 						<?php
 					}
 					?>
-					
+
 					<!-- Total -->
 					<tr>
 						<td class="name"><?php _e('Total Price:', 'edd-invoices' ); ?></td>
 						<td class="price"><?php echo edd_payment_amount( $payment->ID ); ?></td>
 					</tr>
-					
+
 					<!-- Paid -->
 					<tr>
 						<td class="name"><?php _e('Payment Status:', 'edd-invoices'); ?></td>
@@ -120,7 +120,7 @@
 					</tr>
 				</tfoot>
 				<tbody>
-					<?php 
+					<?php
 					if ($cart) {
 						foreach ($cart as $key=>$item) {
 							if (empty($item['in_bundle'])) {
@@ -149,81 +149,81 @@
 				</tbody>
 			</table>
 		</section>
-		
+
 		<!-- Additional Info -->
 		<section id="additional-info">
 			<div class="alignleft">
 				<header><?php _e('Additional Info:', 'edd-invoices'); ?></header>
-				
+
 				<article>
 					<!-- Purchase Date -->
 					<p>
-						<?php 
-						_e('Purchase Date: ', 'edd-invoices'); 
+						<?php
+						_e('Purchase Date: ', 'edd-invoices');
 						echo date('dS F, Y', strtotime($payment->post_date));
 						?>
 					</p>
-					
-					
+
+
 					<?php
 					// Vendor Company Registration #
 					if (isset($this->settings['edd-invoices'.'-number']) AND !empty($this->settings['edd-invoices'.'-number'])) {
 						?>
 						<!-- Vendor Company Registration # -->
 						<p>
-							<?php 
-							_e('Vendor Company Registration #: ', 'edd-invoices'); 
+							<?php
+							_e('Vendor Company Registration #: ', 'edd-invoices');
 							echo $this->settings['edd-invoices'.'-number'];
 							?>
 						</p>
-						<?php	
+						<?php
 					}
-					
+
 					// Vendor Tax/VAT #
 					if (isset($this->settings['edd-invoices'.'-tax']) AND !empty($this->settings['edd-invoices'.'-tax'])) {
 						?>
 						<!-- Vendor Tax/VAT # -->
 						<p>
-							<?php 
-							_e('Company Tax/VAT #: ', 'edd-invoices'); 
+							<?php
+							_e('Company Tax/VAT #: ', 'edd-invoices');
 							echo $this->settings['edd-invoices'.'-tax'];
 							?>
 						</p>
-						<?php	
+						<?php
 					}
 					?>
-					
+
 					<p>&nbsp;</p>
-					
+
 					<?php
 					// Customer Tax/VAT #
 					if (isset($user['address']['vat']) AND !empty($user['address']['vat'])) {
 						?>
 						<!-- Customer Tax/VAT # -->
 						<p>
-							<?php 
-							_e('Customer Tax/VAT #: ', 'edd-invoices'); 
+							<?php
+							_e('Customer Tax/VAT #: ', 'edd-invoices');
 							echo $user['address']['vat'];
 							?>
 						</p>
-						<?php	
+						<?php
 					}
-					
+
 					// Customer Notes
 					if (isset($user['address']['notes']) AND !empty($user['address']['notes'])) {
 						?>
 						<!-- Notes -->
 						<p>
-							<?php 
+							<?php
 							echo $user['address']['notes'];
 							?>
 						</p>
-						<?php	
+						<?php
 					}
 					?>
 				</article>
 			</div>
-			
+
 			<?php
 			if (strtolower($status) == 'complete') {
 				?>
@@ -231,9 +231,9 @@
 					<img src="<?php echo trailingslashit($this->plugin->url); ?>images/paid-sign.png" width="213" height="113" alt="<?php _e('Paid', 'edd-invoices'); ?>" />
 				</div>
 				<?php
-			} 
+			}
 			?>
 		</section>
-	</div>					
+	</div>
 </body>
 </html>
