@@ -56,6 +56,6 @@
 	</div>
 	<div class="edd-invoices-div edd-invoices-custom-div">
 		<?php wp_nonce_field('edd-invoices'.'-generate-invoice', 'edd-invoices'.'-nonce'); ?>
-		<input type="submit" value="<?php _e('Save Billing Details &amp; Generate Invoice', 'edd-invoices'); ?>" />
+		<input type="submit" class="edd-invoices-generate-invoice-button edd_submit button button-secondary" value="<?php _e('Save Billing Details &amp; Generate Invoice', 'edd-invoices'); ?>" />
 	</div>
 </form>
