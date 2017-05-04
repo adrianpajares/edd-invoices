@@ -350,10 +350,13 @@ if ( class_exists( 'Easy_Digital_Downloads' ) ) {
 	new EDDInvoices();
 }
 
+/**
+ * Create the page contianing the edd_invoices page upon activation and define the setting
+ */
 function edd_invoices_activation() {
 
-	// if our page isnt set
-	if ( ! edd_get_option( 'edd-invoices-page', false ) ) {
+	// if our page isn't set
+	if ( function_exists( 'edd-invoices-page' ) && ! edd_get_option( 'edd-invoices-page', false ) ) {
 		// make page
 		$page = wp_insert_post(
 			array(
@@ -371,5 +374,4 @@ function edd_invoices_activation() {
 		update_option( 'edd_settings', array_merge( $edd_options, $options ) );
 	}
 }
-
 register_activation_hook( __FILE__, 'edd_invoices_activation' );
