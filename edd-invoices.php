@@ -205,14 +205,14 @@ class EDDInvoices {
 		}
 
 		// Get payment ID and customer ID
-		$payment = edd_get_payment_by( 'ID', $payment_id );
-		if ( ! $payment ) {
+		$payment = new EDD_Payment( $payment_id );
+		if ( $payment_id != $payment->ID ) {
 			return __( 'Invalid payment ID specified.', 'edd-invoices' );
 		}
 
 		// Check user has permission to view invoice
-		$customerID    = edd_get_payment_user_id( $payment_id );
-		$user_can_view = ( is_user_logged_in() && $customerID == get_current_user_id() ) || ( ( $customerID == 0 || $customerID == '-1' ) && ! is_user_logged_in() && edd_get_purchase_session() ) || current_user_can( 'view_shop_sensitive_data' );
+		$user_id       = $payment->user_id;
+		$user_can_view = ( is_user_logged_in() && $user_id == get_current_user_id() ) || ( ( $user_id == 0 || $user_id == '-1' ) && ! is_user_logged_in() && edd_get_purchase_session() ) || current_user_can( 'view_shop_sensitive_data' );
 		if ( ! $user_can_view ) {
 			return __( 'You do not have permission to view this invoice.', 'edd-invoices' );
 		}
@@ -232,8 +232,8 @@ class EDDInvoices {
 		}
 
 		// Generate Form
-		$payment = get_post( $paymentID );
-		$user    = edd_get_payment_meta_user_info( $payment->ID );
+		$payment = new EDD_Payment( $paymentID );
+		$user    = $payment->user_info;
 
 		// Generate form URL
 		$url = esc_url( add_query_arg( array(
@@ -277,12 +277,12 @@ class EDDInvoices {
 		update_post_meta( $paymentID, '_edd_payment_meta', $meta );
 
 		// Get payment
-		$payment = get_post( $paymentID );
-		$meta    = edd_get_payment_meta( $payment->ID );
-		$cart    = edd_get_payment_meta_cart_details( $payment->ID, true );
-		$user    = edd_get_payment_meta_user_info( $payment->ID );
-		$email   = edd_get_payment_user_email( $payment->ID );
-		$status  = edd_get_payment_status( $payment, true );
+		$payment = new EDD_Payment( $paymentID );
+		$meta    = $payment->payment_meta;
+		$cart    = $payment->cart_details;
+		$user    = $payment->user_info;
+		$email   = $payment->email;
+		$status  = $payment->status;
 
 		// Generate HTML
 		ob_start();
