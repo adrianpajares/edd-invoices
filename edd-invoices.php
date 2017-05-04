@@ -64,7 +64,7 @@ class EDDInvoices {
 			add_shortcode( 'edd_invoices', array( $this, 'generateInvoice' ) );
 
 			// Frontend Hooks
-			add_action( 'edd_purchase_history_header_after', array( $this, 'purchaseHistoryHeader' ) );
+			add_action( 'edd_purchase_history_header_after', array( $this, 'purchaseHistoryHeader' ), 10 );
 			add_action( 'edd_purchase_history_row_end', array( $this, 'purchaseHistoryLink' ), 1, 2 );
 			add_action( 'init', array( $this, 'generateInvoiceHTML' ) );
 		}
@@ -188,7 +188,8 @@ class EDDInvoices {
 			'revoked'
 		) );
 
-		if ( ! array_key_exists( $payment->status, $acceptable_payment_statuses ) ){
+		if ( ! in_array( $payment->status, $acceptable_payment_statuses ) ){
+			echo '<td class="edd_invoice"></td>';
 			return;
 		}
 
