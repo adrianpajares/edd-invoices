@@ -82,76 +82,76 @@ class EDDInvoices {
 	 */
 	function adminSettings( $settings ) {
 		// Settings
-		$settingsArr[ 'edd-invoices' . '-settings' ]     = array(
-			'id'   => 'edd-invoices' . '-settings',
+		$settingsArr[ 'edd-invoices-settings' ] = array(
+			'id'   => 'edd-invoices-settings',
 			'name' => __( 'Invoices', 'edd-invoices' ),
 			'desc' => '',
 			'type' => 'header',
 		);
-		$settingsArr[ 'edd-invoices' . '-page' ]         = array(
-			'id'      => 'edd-invoices' . '-page',
+		$settingsArr[ 'edd-invoices-page' ] = array(
+			'id'      => 'edd-invoices-page',
 			'name'    => __( 'Invoice Page', 'edd-invoices' ),
 			'desc'    => __( 'Which Page contains the [edd_invoices] shortcode?', 'edd-invoices' ),
 			'type'    => 'select',
 			'options' => edd_get_pages(),
 		);
-		$settingsArr[ 'edd-invoices' . '-logo' ]         = array(
-			'id'   => 'edd-invoices' . '-logo',
+		$settingsArr[ 'edd-invoices-logo' ] = array(
+			'id'   => 'edd-invoices-logo',
 			'name' => __( 'Logo URL', 'edd-invoices' ),
 			'type' => 'upload',
 			'size' => 'regular',
 		);
-		$settingsArr[ 'edd-invoices' . '-company-name' ] = array(
-			'id'   => 'edd-invoices' . '-company-name',
+		$settingsArr[ 'edd-invoices-company-name' ] = array(
+			'id'   => 'edd-invoices-company-name',
 			'name' => __( 'Company Name', 'edd-invoices' ),
 			'desc' => __( 'Company Name shown on Invoices', 'edd-invoices' ),
 			'type' => 'text',
 			'size' => 'regular',
 		);
-		$settingsArr[ 'edd-invoices' . '-address' ]      = array(
-			'id'   => 'edd-invoices' . '-address',
+		$settingsArr[ 'edd-invoices-address' ] = array(
+			'id'   => 'edd-invoices-address',
 			'name' => __( 'Address Line 1', 'edd-invoices' ),
 			'desc' => __( 'Company Address, Line 1', 'edd-invoices' ),
 			'type' => 'text',
 			'size' => 'regular',
 		);
-		$settingsArr[ 'edd-invoices' . '-address2' ]     = array(
-			'id'   => 'edd-invoices' . '-address2',
+		$settingsArr[ 'edd-invoices-address2' ] = array(
+			'id'   => 'edd-invoices-address2',
 			'name' => __( 'Address Line 2', 'edd-invoices' ),
 			'desc' => __( 'Company Address, Line 2', 'edd-invoices' ),
 			'type' => 'text',
 			'size' => 'regular',
 		);
-		$settingsArr[ 'edd-invoices' . '-city' ]         = array(
-			'id'   => 'edd-invoices' . '-city',
+		$settingsArr[ 'edd-invoices-city' ] = array(
+			'id'   => 'edd-invoices-city',
 			'name' => __( 'City', 'edd-invoices' ),
 			'desc' => __( 'Company City', 'edd-invoices' ),
 			'type' => 'text',
 			'size' => 'regular',
 		);
-		$settingsArr[ 'edd-invoices' . '-zipcode' ]      = array(
-			'id'   => 'edd-invoices' . '-zipcode',
+		$settingsArr[ 'edd-invoices-zipcode' ] = array(
+			'id'   => 'edd-invoices-zipcode',
 			'name' => __( 'ZIP / Postal Code', 'edd-invoices' ),
 			'desc' => __( 'Company ZIP/Postal Code', 'edd-invoices' ),
 			'type' => 'text',
 			'size' => 'regular',
 		);
-		$settingsArr[ 'edd-invoices' . '-country' ]      = array(
-			'id'      => 'edd-invoices' . '-country',
+		$settingsArr[ 'edd-invoices-country' ] = array(
+			'id'      => 'edd-invoices-country',
 			'name'    => __( 'Country', 'edd-invoices' ),
 			'desc'    => __( 'Company Country', 'edd-invoices' ),
 			'type'    => 'select',
 			'options' => edd_get_country_list(),
 		);
-		$settingsArr[ 'edd-invoices' . '-number' ]       = array(
-			'id'   => 'edd-invoices' . '-number',
+		$settingsArr[ 'edd-invoices-number' ] = array(
+			'id'   => 'edd-invoices-number',
 			'name' => __( 'Registration Number', 'edd-invoices' ),
 			'desc' => __( 'Company Registration Number', 'edd-invoices' ),
 			'type' => 'text',
 			'size' => 'regular',
 		);
-		$settingsArr[ 'edd-invoices' . '-vat' ]          = array(
-			'id'   => 'edd-invoices' . '-tax',
+		$settingsArr[ 'edd-invoices-vat' ] = array(
+			'id'   => 'edd-invoices-tax',
 			'name' => __( 'Tax/VAT Number', 'edd-invoices' ),
 			'desc' => __( 'Company Tax/VAT Number', 'edd-invoices' ),
 			'type' => 'text',
