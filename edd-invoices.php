@@ -181,13 +181,13 @@ class EDDInvoices {
 	function purchaseHistoryLink( $paymentID, $purchaseData ) {
 
 		$payment = new EDD_Payment( $paymentID );
-		
+
 		$acceptable_payment_statuses = apply_filters( 'edd_invoices_acceptable_payment_statuses', array(
 			'publish',
 			'complete',
 			'revoked'
 		) );
-		
+
 		if ( ! array_key_exists( $payment->status, $acceptable_payment_statuses ) ){
 			return;
 		}
