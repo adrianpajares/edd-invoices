@@ -1,10 +1,10 @@
 === Easy Digital Downloads - Invoices ===
-Contributors: n7studios,chriscct7,smub,WPbeginner,griffinjt
+Contributors: easydigitaldownloads
 Donate link: http://www.wpbeginner.com/
 Tags: edd,easy digital downloads,invoices,invoicing
 Requires at least: 3.9
-Tested up to: 4.6
-Stable tag: 1.1.2
+Tested up to: 4.7
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,15 @@ Display HTML Invoices for EDD
 
 
 == Changelog ==
+
+= 1.1.3, May 4, 2017 =
+* Fix: Don't show Generate Invoice links for invalid payments.
+* Fix: Move to using EDD_Payment for increased accuracy.
+* Fix: Check if edd_get_setting exists before using it on activation.
+* Fix: Prevent PHP errors when a payment does not contain billing address information.
+* Fix: Fix asset URL to paid image.
+* Tweak: Add classes to generate invoice submit button.
+
 
 = 1.1.2, July 5, 2016 =
 * Fix: Settings not retrieved on Invoice page
