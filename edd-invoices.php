@@ -28,7 +28,6 @@
  * @package    EDD
  * @subpackage EDD Invoices
  * @author     Easy Digital Downloads
- * @version    1.1.3
  * @copyright  Easy Digital Downloads, LLC
  */
 class EDDInvoices {
@@ -41,7 +40,7 @@ class EDDInvoices {
 		$this->plugin              = new stdClass;
 		$this->plugin->name        = 'edd-invoices'; // Plugin Folder
 		$this->plugin->displayName = 'Invoices'; // Plugin Name
-		$this->plugin->version     = '1.1.4 ';
+		$this->plugin->version     = '1.1.4';
 		$this->plugin->folder      = WP_PLUGIN_DIR . '/' . 'edd-invoices'; // Full Path to Plugin Folder
 		$this->plugin->dirname     = plugin_dir_path( __FILE__ );
 		$this->plugin->url         = plugin_dir_url( __FILE__ );
