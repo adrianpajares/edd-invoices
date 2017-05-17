@@ -1,3 +1,9 @@
+= 1.1.5 =
+* Fix: Date not showing properly for subscription renewal payments
+
+= 1.1.4 =
+* Fix: Invalid HTML structure
+
 = 1.1.3 =
 * Fix: Don't show Generate Invoice links for invalid payments.
 * Fix: Move to using EDD_Payment for increased accuracy.
