@@ -161,7 +161,7 @@
 					<p>
 						<?php
 						_e('Purchase Date: ', 'edd-invoices');
-						echo date('dS F, Y', strtotime($payment->completed_date));
+						echo empty( $payment->completed_date ) ? date('dS F, Y', strtotime( $payment->date ) ) : date('dS F, Y', strtotime( $payment->completed_date ) );
 						?>
 					</p>
 
